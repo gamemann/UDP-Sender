@@ -22,7 +22,7 @@ void sigHndl(int tmp)
     cont = 0;
 }
 
-int randNum(int min, int max)
+int randNum(uint16_t min, uint16_t max)
 {
     return (rand() % (max - min + 1)) + min;
 }
