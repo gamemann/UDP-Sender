@@ -120,7 +120,6 @@ void *connHndl(void *data)
 
         sin.sin_family = AF_INET;
         sin.sin_addr.s_addr = inet_addr(con->sIP);
-        sin.sin_port = htons(port);
         memset(&sin.sin_zero, 0, sizeof(sin.sin_zero));
 
         // Fill out IP and UDP headers.
@@ -150,7 +149,7 @@ void *connHndl(void *data)
         // Send the packet.
         if ((dataSent = sendto(con->sockfd, buffer, iphdr->tot_len, 0, (struct sockaddr *)&sin, sizeof(sin))) < 0)
         {
-            fprintf(stdout, "Failed to send a packet. Error - %s\n", strerror(errno));
+            fprintf(stdout, "Failed to send a packet. Error - %s (Sock FD is %" PRIu8 ")\n", strerror(errno), con->sockfd);
         }
 
         // Wait.
