@@ -238,21 +238,6 @@ int main(uint8_t argc, char *argv[])
         exit(1);
     }
 
-    // Don't do MTU Discovery on raw sockets :P
-    uint8_t mtu = IP_PMTUDISC_PROBE;
-
-    if (setsockopt(sockfd, IPPROTO_IP, IP_MTU_DISCOVER, &mtu, sizeof(mtu)) < 0)
-    {
-        fprintf(stderr, "SetSockOpt() Error - %s", strerror(errno));
-        perror("setsockopt");
-
-        // Close socket.
-        close(sockfd);
-
-        exit(1);
-    }
-
-
     // Signal.
     signal(SIGINT, sigHndl);
 
