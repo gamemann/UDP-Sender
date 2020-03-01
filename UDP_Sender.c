@@ -119,7 +119,7 @@ void *connHndl(void *data)
         struct sockaddr_in sin;
 
         sin.sin_family = AF_INET;
-        sin.sin_addr.s_addr = inet_addr(con->sIP);
+        sin.sin_addr.s_addr = inet_addr(con->dIP);
         memset(&sin.sin_zero, 0, sizeof(sin.sin_zero));
 
         // Fill out IP and UDP headers.
@@ -237,6 +237,21 @@ int main(uint8_t argc, char *argv[])
 
         exit(1);
     }
+
+    // Don't do MTU Discovery on raw sockets :P
+    uint8_t mtu = IP_PMTUDISC_PROBE;
+
+    if (setsockopt(sockfd, IPPROTO_IP, IP_MTU_DISCOVER, &mtu, sizeof(mtu)) < 0)
+    {
+        fprintf(stderr, "SetSockOpt() Error - %s", strerror(errno));
+        perror("setsockopt");
+
+        // Close socket.
+        close(sockfd);
+
+        exit(1);
+    }
+
 
     // Signal.
     signal(SIGINT, sigHndl);
