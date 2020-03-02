@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
     // Prevent program from closing.
     while (cont)
     {
-        
+        sleep(1);
     }
 
     // Close socket.
