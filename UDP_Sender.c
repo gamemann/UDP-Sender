@@ -152,6 +152,10 @@ void *connHndl(void *data)
             fprintf(stdout, "Failed to send a packet. Error - %s (Sock FD is %" PRIu8 ")\n", strerror(errno), con->sockfd);
         }
 
+        totalData += dataSent;
+
+        packets++;
+
         // Wait.
         if (con->time > 0)
         {
@@ -172,6 +176,8 @@ int main(int argc, char *argv[])
 
         exit(0);
     }
+
+    time_t start = time(NULL);
 
     // Create connection struct and fill out with argument data.
     struct connection con;
@@ -260,6 +266,15 @@ int main(int argc, char *argv[])
     {
         sleep(1);
     }
+
+    time_t end = time(NULL);
+
+    time_t total = end - start;
+    uint64_t pps = (uint64_t)(packets / (uint64_t)total);
+    uint64_t totalMbits = totalData / 125000;
+    uint64_t mbits = (uint64_t)(totalMbits / (uint64_t)total);
+
+    fprintf(stdout, "\nTotal Time Elapsed => %jd seconds\nPacket Count => %" PRIu64 " (%" PRIu64 " PPS)\nData Sent => %" PRIu64 " megabits (%" PRIu64 " mbps)\n", total, packets, pps, totalMbits, mbits);
 
     // Close socket.
     close(sockfd);
