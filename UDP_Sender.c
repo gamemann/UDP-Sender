@@ -249,7 +249,7 @@ int main(int argc, char *argv[])
 
         if (pthread_create(&tid, NULL, connHndl, (void *)&con) != 0)
         {
-            fprintf(stderr, "Failed to create thread #%" PRIu16 ".\n");
+            fprintf(stderr, "Failed to create thread #%" PRIu16 ".\n", i);
         }
 
         fprintf(stdout, "Spawned thread #%" PRIu16 "...\n", i);
