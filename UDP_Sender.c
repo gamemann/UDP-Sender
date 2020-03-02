@@ -247,7 +247,10 @@ int main(int argc, char *argv[])
         // Create thread to handle packets.
         pthread_t tid;
 
-        pthread_create(&tid, NULL, connHndl, (void *)&con);
+        if (pthread_create(&tid, NULL, connHndl, (void *)&con) != 0)
+        {
+            fprintf(stderr, "Failed to create thread #%" PRIu16 ".\n");
+        }
 
         fprintf(stdout, "Spawned thread #%" PRIu16 "...\n", i);
     }
