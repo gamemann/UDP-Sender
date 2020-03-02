@@ -163,7 +163,7 @@ void *connHndl(void *data)
     pthread_exit(NULL);
 }
 
-int main(uint8_t argc, char *argv[])
+int main(int argc, char *argv[])
 {
     // Check argument count.
     if (argc < 4)
@@ -209,7 +209,7 @@ int main(uint8_t argc, char *argv[])
     }
 
     // Create socket.
-    int8_t sockfd;
+    int sockfd;
     int8_t one = 1;
 
     sockfd = socket(PF_INET, SOCK_RAW, IPPROTO_UDP);
